@@ -1,6 +1,14 @@
 package my.examples.springjdbc.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.util.Date;
+
+@Getter
+@Setter
+@ToString
 
 public class User {
     private Long id;
@@ -9,7 +17,7 @@ public class User {
     private String email;
     private String passwd;
     private Date regdate;
-
+/*
     public User(){
         regdate = new Date();
     }
@@ -72,5 +80,5 @@ public class User {
                 ", passwd='" + passwd + '\'' +
                 ", regdate=" + regdate +
                 '}';
-    }
+    }*/
 }

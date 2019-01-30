@@ -9,13 +9,14 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 import java.util.List;
 
+
 public class SpringApplication {
     public static void main(String[] args){
         ApplicationContext applicationContext =
                 new AnnotationConfigApplicationContext(ApplicationConfig.class);
 
         UserDao userDao = applicationContext.getBean(UserDao.class);
-//        List<User> users = userDao.selectAll();
+//        List<User> users = userDao.selectByPage();
 //        for(User user : users){
 //            System.out.println(user);
 //        }

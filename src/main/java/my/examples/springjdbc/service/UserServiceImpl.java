@@ -6,13 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
-public class UserServiceImpl implements UserService{
-//    @Autowired
+public class UserServiceImpl implements UserService {
+    //    @Autowired
     private UserDao userDao;
 
     // UserServiceImpl객체를 생성하려고 UserDaoImpl 객체를 주입한다.
-    public UserServiceImpl(UserDao userDao){
+    public UserServiceImpl(UserDao userDao) {
         this.userDao = userDao;
     }
 
@@ -35,6 +37,15 @@ public class UserServiceImpl implements UserService{
     @Override
     @Transactional(readOnly = true)
     public User getUserByEmail(String email) {
+
         return userDao.selectUserByEmail(email);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<User> getUsers(int page) {
+
+        int start = page * 3 - 3;
+        return userDao.selectByPage(start, 3);
     }
 }

@@ -48,6 +48,16 @@ public class BoardDaoImpl implements BoardDao{
 
     @Override
     public void addBoard(Board board) {
+/*
+
+        Map<String,Object> paramMap = new HashMap<>();
+        paramMap.put("name", board.getName());
+        paramMap.put("nickname", board.getNickname());
+
+        paramMap.put("regdate", board.getRegdate());
+        Number number = simpleJdbcInsert.executeAndReturnKey(paramMap);
+        return number.longValue();
+*/
 
     }
 
@@ -78,7 +88,13 @@ public class BoardDaoImpl implements BoardDao{
 
     @Override
     public void addReBoard(Board board) {
-
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("name",board.getName());
+        paramMap.put("nickname",board.getNickname());
+        paramMap.put("title",board.getTitle());
+        paramMap.put("content",board.getContent());
+        paramMap.put("regdate",board.getRegdate());
+        Number number = simpleJdbcInsert.executeAndReturnKey(paramMap);
     }
 
     @Override

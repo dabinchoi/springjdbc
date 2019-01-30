@@ -1,68 +1,62 @@
 package my.examples.springjdbc.service;
 
+
 import my.examples.springjdbc.dao.BoardDao;
+import my.examples.springjdbc.dao.BoardDaoImpl;
 import my.examples.springjdbc.dto.Board;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class BoardServiceImpl implements BoardService{
-
-    @Autowired
     private BoardDao boardDao;
-
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<Board> selectAllBoards(int start, int limit) {
-        return boardDao.getBoards(0,5);
-    }
+    public static final int SIZE = 3;
 
     @Override
     @Transactional(readOnly = true)
-    public Board selectBoard(Long id) {
-        return null;
+    public List<Board> getBoards(int page) {
+     //   BoardDao boardDao = new BoardDaoImpl();
+        int start = page * SIZE -SIZE;
+        int limit = SIZE;
+
+        List<Board> boards = new ArrayList<>();
+
+        return boards;
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public List<Board> searchBoards(String option, String keyword) {
-        return null;
+    @Transactional
+    public Board getBoard(Long id) {
+        Board board = null;
+        Connection conn = null;
+
+        return board;
+    }
+
+
+    @Override
+    public void deleteBoard(Long id) {
+        Connection conn = null;
+        //BoardDao boardDao = new BoardDaoImpl();
+
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public int selectAllCount() {
-        return 0;
+    public void addBoard(Board board) {
+        Connection conn = null;
+     //   BoardDao boardDao = new BoardDaoImpl();
+
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public long selectSearchCount(String subject, String keyword) {
-        return 0;
-    }
 
     @Override
-    @Transactional(readOnly = true)
-    public long getTotalPage(int boardCount, int list) {
-        return 0;
-    }
+    public void addReBoard(Board board) {
+        Connection conn = null;
+      //  BoardDao boardDao = new BoardDaoImpl();
 
-    @Override
-    public long addBoard(Board board) {
-        return 0;
-    }
-
-    @Override
-    public long updateBoard(Long id, String title, String content) {
-        return 0;
-    }
-
-    @Override
-    public long deleteBoard(Long id) {
-        return 0;
     }
 }
