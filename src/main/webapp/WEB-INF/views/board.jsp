@@ -3,21 +3,16 @@
 <html>
 <head>
     <meta charset="utf-8">
-
-    <!-- Latest compiled and minified CSS -->
+    <title>Board</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
-    <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-    <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
 
 <body>
 
-<h1 style="text-align:center; margin-top:50px;">게시판 만들기 </h1>
+<h1 style="text-align:center; margin-top:50px;">게시판 보기 </h1>
 <div style="width:50%; margin:0 auto; padding-top:50px;">
     <c:if test="${sessionScope.logininfo == null}">
         <a class="btn btn-default" href="/login" id="" style='width:15%; float:right;'>로그인</a>
@@ -39,13 +34,13 @@
     <tbody>
     <c:forEach items="${boards}" var="board">
         <tr>
-            <td>${board.id}</td>
+            <td><a href="/view?id=${board.id}">${board.id}</a></td>
             <td>
-                <c:forEach begin="1" end="${board.groupDepth}">&nbsp;</c:forEach>
-                <a href="/read?id=${board.id}">${board.title}</a></td>
-            <td>${board.nickname}</td>
-            <td>${board.regdate}</td>
-            <td>${board.readCount}</td>
+                <a href="/view?id=${board.id}"><c:forEach begin="1" end="${board.groupDepth}">[RE]</c:forEach></a>
+                <a href="/view?id=${board.id}">${board.title}</a></td>
+            <td><a href="/view?id=${board.id}">${board.nickname}</a></td>
+            <td><a href="/view?id=${board.id}">${board.regdate}</a></td>
+            <td><a href="/view?id=${board.id}">${board.readCount}</a></td>
         </tr>
     </c:forEach>
     </tbody>
@@ -77,7 +72,7 @@
 
 <div class="box1" style="width:40%; margin:3% auto 10%;">
     <div class="form-group" style="width:17%; margin-right:2%; float:left;">
-       <%-- <label class="sr-only" for="sop">sop</label>--%>
+        <label class="sr-only" >sop</label>
         <select name=sop class="form-control">
             <option value=제목>제목</option>
             <option value=내용>내용</option>
@@ -85,7 +80,7 @@
         </select>
     </div>
     <div class="form-group" style="width:60%; float:left;">
-     <%--   <label class="sr-only" for="stx">stx</label>--%>
+        <label class="sr-only" >stx</label>
         <input name=stx maxlength=15 size=10 itemname="검색어" required value='' class="form-control">
     </div>
     <div class="form-group" >
@@ -105,30 +100,3 @@
 
 </html>
 
-
-
-
-
-<!--
-<form action="http://localhost/hidden.php">
-<input type="text" name="id" >
-<input type="hidden" name="pw" value="pw">
-<input type="submit">
-</form>
-
-<div class="container">
-<h2>Dropdowns</h2>
-<p>The .divider class is used to separate links inside the dropdown menu with a thin horizontal line:</p>
-<div class="dropdown">
-<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Tutorials
-<span class="caret"></span></button>
-<ul class="dropdown-menu">
-<li><a href="#">HTML</a></li>
-<li><a href="#">CSS</a></li>
-<li><a href="#">JavaScript</a></li>
-<li class="divider"></li>
-<li><a href="#">About Us</a></li>
-</ul>
-</div>
-</div>
--->

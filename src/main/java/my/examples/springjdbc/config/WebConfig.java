@@ -36,6 +36,6 @@ public ViewResolver viewResolver(){
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("redirect:/list");
+        registry.addViewController("/").setViewName("redirect:/board");
     }
 }

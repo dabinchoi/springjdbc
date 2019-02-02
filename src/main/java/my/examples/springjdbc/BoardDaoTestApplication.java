@@ -19,5 +19,8 @@ public class BoardDaoTestApplication {
         Board board =
                 boardDao.getBoard(16L);
         System.out.println(board);
+
+        int count = boardDao.getBoardCount();
+        System.out.println(count);
     }
 }

@@ -9,10 +9,8 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 import static my.examples.springjdbc.dao.BoardDaoSqls.*;
 
 @Repository
@@ -22,10 +20,10 @@ public class BoardDaoImpl implements BoardDao{
     private RowMapper<Board> rowMapper = BeanPropertyRowMapper.newInstance(Board.class);
 
     public BoardDaoImpl(DataSource dataSource){
-        jdbc = new NamedParameterJdbcTemplate(dataSource);
-        simpleJdbcInsert = new SimpleJdbcInsert(dataSource)
-                           .withTableName("board")
-                           .usingGeneratedKeyColumns("id");
+        this.jdbc = new NamedParameterJdbcTemplate(dataSource);
+        this.simpleJdbcInsert = new SimpleJdbcInsert(dataSource)
+                .withTableName("board")
+                .usingGeneratedKeyColumns("id");
     }
 
     @Override
@@ -43,23 +41,26 @@ public class BoardDaoImpl implements BoardDao{
 
     @Override
     public List<Board> getBoards(int start, int limit) {
-        return null;
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("start", start);
+        paramMap.put("limit", limit);
+        return jdbc.query(SELECT_BY_PAGING, paramMap,rowMapper);
     }
 
     @Override
-    public void addBoard(Board board) {
-/*
-
-        Map<String,Object> paramMap = new HashMap<>();
-        paramMap.put("name", board.getName());
+    public long addBoard(Board board) {
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("title", board.getTitle());
+        paramMap.put("user_id", board.getUserId());
         paramMap.put("nickname", board.getNickname());
-
-        paramMap.put("regdate", board.getRegdate());
+        paramMap.put("content", board.getContent());
+        paramMap.put("group_no", board.getGroupNo());
+        paramMap.put("group_seq", board.getGroupSeq());
+        paramMap.put("group_depth", board.getGroupDepth());
         Number number = simpleJdbcInsert.executeAndReturnKey(paramMap);
-        return number.longValue();
-*/
-
-    }
+        return number.longValue();    }
+    //            "insert into board (title, user_id, nickname, content, group_no, group_seq, group_depth) " +
+    //                    "values( :title, :userId, :nickname, :content ,  0 , 0, 0 )";
 
     @Override
     public Long getLastInsertId() {
@@ -73,12 +74,16 @@ public class BoardDaoImpl implements BoardDao{
 
     @Override
     public void deleteBoard(Long id) {
-
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("id", id);
+        jdbc.query(DELETE, paramMap, rowMapper);
     }
 
     @Override
     public void updateReadCount(long id) {
-
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("id", id);
+        jdbc.query(UPDATE_READ_COUNT, paramMap, rowMapper);
     }
 
     @Override
@@ -88,19 +93,13 @@ public class BoardDaoImpl implements BoardDao{
 
     @Override
     public void addReBoard(Board board) {
-        Map<String, Object> paramMap = new HashMap<>();
-        paramMap.put("name",board.getName());
-        paramMap.put("nickname",board.getNickname());
-        paramMap.put("title",board.getTitle());
-        paramMap.put("content",board.getContent());
-        paramMap.put("regdate",board.getRegdate());
-        Number number = simpleJdbcInsert.executeAndReturnKey(paramMap);
+
     }
 
     @Override
     public int getBoardCount() {
         Map emptyMap = Collections.emptyMap();
-        int count = jdbc.queryForObject("select count(*) from board", emptyMap, Integer.class);
+        int count = jdbc.queryForObject(TOTAL_BOARD_POSTS, emptyMap, Integer.class);
         return count;
     }
 }
