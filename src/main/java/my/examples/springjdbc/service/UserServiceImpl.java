@@ -10,7 +10,7 @@ import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
-    //    @Autowired
+       @Autowired
     private UserDao userDao;
 
     // UserServiceImpl객체를 생성하려고 UserDaoImpl 객체를 주입한다.
@@ -47,5 +47,9 @@ public class UserServiceImpl implements UserService {
 
         int start = page * 3 - 3;
         return userDao.selectByPage(start, 3);
+    }
+    @Override
+    public int updateUserPassword(User user) {
+        return userDao.updatePasswordByEmail(user);
     }
 }
