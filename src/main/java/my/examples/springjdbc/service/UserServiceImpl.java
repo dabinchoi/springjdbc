@@ -48,8 +48,8 @@ public class UserServiceImpl implements UserService {
         int start = page * 3 - 3;
         return userDao.selectByPage(start, 3);
     }
-    @Override
+    /*@Override
     public int updateUserPassword(User user) {
         return userDao.updatePasswordByEmail(user);
-    }
+    }*/
 }
